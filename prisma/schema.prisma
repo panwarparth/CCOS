@@ -135,6 +135,7 @@ model EvidenceFile {
   fileName   String
   mimeType   String
   size       Int
+  data       Bytes    // Store file content in database
   createdAt  DateTime @default(now())
   evidence   Evidence @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
 

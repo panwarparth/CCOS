@@ -4,11 +4,8 @@ import { AuditLogger } from './AuditLogger';
 import { AuditActionTypes } from '@/types';
 import { RoleGuard } from './RoleGuard';
 import { PaymentEligibilityEngine } from './PaymentEligibilityEngine';
-import fs from 'fs/promises';
-import path from 'path';
 import { generateStorageKey } from '@/lib/utils';
 
-const UPLOAD_DIR = process.env.UPLOAD_DIR || './uploads';
 const MAX_FILE_SIZE_MB = parseInt(process.env.MAX_FILE_SIZE_MB || '10', 10);
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
@@ -79,9 +76,6 @@ export class EvidenceService {
       }
     }
 
-    // Ensure upload directory exists
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-
     // Create evidence and files in transaction
     const evidence = await prisma.$transaction(async (tx) => {
       // Create evidence record (frozen = true immediately)
@@ -96,16 +90,12 @@ export class EvidenceService {
         },
       });
 
-      // Save files and create records
+      // Save files to database
       const fileRecords = [];
       for (const file of submission.files) {
         const storageKey = generateStorageKey(file.originalName);
-        const filePath = path.join(UPLOAD_DIR, storageKey);
 
-        // Write file to disk
-        await fs.writeFile(filePath, file.buffer);
-
-        // Create file record
+        // Create file record with data stored in database
         const fileRecord = await tx.evidenceFile.create({
           data: {
             evidenceId: evidence.id,
@@ -113,6 +103,7 @@ export class EvidenceService {
             fileName: file.originalName,
             mimeType: file.mimeType,
             size: file.size,
+            data: file.buffer, // Store file content in database
           },
         });
         fileRecords.push(fileRecord);
@@ -339,21 +330,14 @@ export class EvidenceService {
       where: { id: fileId },
     });
 
-    if (!file) {
+    if (!file || !file.data) {
       return null;
     }
 
-    const filePath = path.join(UPLOAD_DIR, file.storageKey);
-
-    try {
-      const buffer = await fs.readFile(filePath);
-      return {
-        buffer,
-        fileName: file.fileName,
-        mimeType: file.mimeType,
-      };
-    } catch {
-      return null;
-    }
+    return {
+      buffer: Buffer.from(file.data),
+      fileName: file.fileName,
+      mimeType: file.mimeType,
+    };
   }
 }
