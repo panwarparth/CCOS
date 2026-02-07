@@ -264,7 +264,7 @@ export default function MilestonesPage() {
                         {formatCurrency(milestone.value || 0)}
                       </td>
                       <td className={`font-medium ${
-                        milestone.paymentEligibility?.eligibleAmount > 0 ? 'text-green-600' : 'text-gray-400'
+                        (milestone.paymentEligibility?.eligibleAmount ?? 0) > 0 ? 'text-green-600' : 'text-gray-400'
                       }`}>
                         {milestone.paymentEligibility
                           ? formatCurrency(milestone.paymentEligibility.eligibleAmount)

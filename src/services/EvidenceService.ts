@@ -152,7 +152,7 @@ export class EvidenceService {
     projectId: string
   ): Promise<{ success: boolean; error?: string }> {
     // Validate role
-    if (![Role.OWNER, Role.PMC].includes(role)) {
+    if (role !== Role.OWNER && role !== Role.PMC) {
       return { success: false, error: 'Only Owner or PMC can review evidence' };
     }
 

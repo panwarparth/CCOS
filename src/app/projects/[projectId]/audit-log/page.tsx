@@ -119,8 +119,8 @@ export default function AuditLogPage() {
     );
   }
 
-  const entityTypes = [...new Set(logs.map((l) => l.entityType))];
-  const actionTypes = [...new Set(logs.map((l) => l.actionType))];
+  const entityTypes = Array.from(new Set(logs.map((l) => l.entityType)));
+  const actionTypes = Array.from(new Set(logs.map((l) => l.actionType)));
 
   return (
     <Layout>

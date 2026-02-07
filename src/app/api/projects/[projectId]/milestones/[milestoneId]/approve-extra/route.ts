@@ -61,7 +61,7 @@ export async function POST(
       entityId: milestoneId,
       beforeJson: { isExtra: true, extraApprovedAt: null },
       afterJson: { isExtra: true, extraApprovedAt: updated.extraApprovedAt },
-      notes: 'Extra milestone approved by Owner',
+      reason: 'Extra milestone approved by Owner',
     });
 
     return NextResponse.json({

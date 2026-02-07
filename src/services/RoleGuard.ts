@@ -47,7 +47,7 @@ export class RoleGuard {
    * Owner and PMC can modify, but only Owner can approve.
    */
   static canEditBOQ(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -63,7 +63,7 @@ export class RoleGuard {
    * Owner and PMC.
    */
   static canEditMilestones(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -79,7 +79,7 @@ export class RoleGuard {
    * Owner and PMC. Vendor cannot approve own work.
    */
   static canReviewEvidence(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -87,7 +87,7 @@ export class RoleGuard {
    * Owner and PMC only.
    */
   static canVerify(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -95,7 +95,7 @@ export class RoleGuard {
    * Owner and PMC.
    */
   static canBlockPayment(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -103,7 +103,7 @@ export class RoleGuard {
    * Owner and PMC.
    */
   static canMarkPaid(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -119,7 +119,7 @@ export class RoleGuard {
    * All roles except Viewer have full access; Vendor has read-only.
    */
   static canViewPayments(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC, Role.VENDOR].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC || auth.role === Role.VENDOR;
   }
 
   /**
@@ -127,7 +127,7 @@ export class RoleGuard {
    * Owner and PMC.
    */
   static canExportAuditLog(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**
@@ -135,7 +135,7 @@ export class RoleGuard {
    * Owner and PMC.
    */
   static canResolveFollowUp(auth: ProjectAuthContext): boolean {
-    return [Role.OWNER, Role.PMC].includes(auth.role);
+    return auth.role === Role.OWNER || auth.role === Role.PMC;
   }
 
   /**

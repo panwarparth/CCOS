@@ -77,7 +77,7 @@ export class CustomViewService {
     return views.map(v => ({
       id: v.id,
       name: v.name,
-      config: v.config as CustomViewConfig,
+      config: v.config as unknown as CustomViewConfig,
       isDefault: v.isDefault,
       createdAt: v.createdAt,
     }));
@@ -97,7 +97,7 @@ export class CustomViewService {
     return {
       id: view.id,
       name: view.name,
-      config: view.config as CustomViewConfig,
+      config: view.config as unknown as CustomViewConfig,
       isDefault: view.isDefault,
       createdAt: view.createdAt,
     };
@@ -126,7 +126,7 @@ export class CustomViewService {
     return {
       id: view.id,
       name: view.name,
-      config: view.config as CustomViewConfig,
+      config: view.config as unknown as CustomViewConfig,
       isDefault: view.isDefault,
       createdAt: view.createdAt,
     };
@@ -161,7 +161,7 @@ export class CustomViewService {
     return {
       id: view.id,
       name: view.name,
-      config: view.config as CustomViewConfig,
+      config: view.config as unknown as CustomViewConfig,
       isDefault: view.isDefault,
       createdAt: view.createdAt,
     };

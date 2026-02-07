@@ -357,14 +357,14 @@ export class BOQService {
           boqId,
           revisionNumber,
           reason,
-          changesJson: {
+          changesJson: JSON.parse(JSON.stringify({
             before: beforeState,
             changes: {
               added: changes.addItems || [],
               updated: changes.updateItems || [],
               removed: changes.removeItemIds || [],
             },
-          },
+          })),
         },
       });
 

@@ -368,7 +368,7 @@ export class PaymentEligibilityEngine {
     projectId: string
   ): Promise<{ success: boolean; error?: string }> {
     // Validate role
-    if (![Role.OWNER, Role.PMC].includes(actorRole)) {
+    if (actorRole !== Role.OWNER && actorRole !== Role.PMC) {
       return { success: false, error: 'Only Owner or PMC can block payments' };
     }
 
@@ -530,7 +530,7 @@ export class PaymentEligibilityEngine {
     actorRole: Role,
     projectId: string
   ): Promise<{ success: boolean; error?: string }> {
-    if (![Role.OWNER, Role.PMC].includes(actorRole)) {
+    if (actorRole !== Role.OWNER && actorRole !== Role.PMC) {
       return { success: false, error: 'Only Owner or PMC can mark payments as paid' };
     }
 
