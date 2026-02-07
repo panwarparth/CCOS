@@ -56,7 +56,7 @@ export async function POST(
       projectId,
       actorId: auth.userId,
       role: auth.role,
-      actionType: AuditActionTypes.MILESTONE_STATE_CHANGE,
+      actionType: AuditActionTypes.MILESTONE_STATE_TRANSITION,
       entityType: 'Milestone',
       entityId: milestoneId,
       beforeJson: { isExtra: true, extraApprovedAt: null },
