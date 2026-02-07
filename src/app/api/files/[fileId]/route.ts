@@ -27,8 +27,8 @@ export async function GET(
       );
     }
 
-    // Return file with proper headers
-    return new NextResponse(file.buffer, {
+    // Return file with proper headers - convert Buffer to Uint8Array for NextResponse
+    return new NextResponse(new Uint8Array(file.buffer), {
       headers: {
         'Content-Type': file.mimeType,
         'Content-Disposition': `inline; filename="${file.fileName}"`,
